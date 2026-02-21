@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>محول العملات العالمي</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Font Awesome للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <div class="currency-converter">
+        <!-- شريط الإشعارات المخفي (للمستخدم العادي) -->
+        <div id="notificationBar" class="notification-bar hidden">
+            <i class="fas fa-check-circle"></i>
+            <span id="notificationMessage">تم تحديث الأسعار بنجاح</span>
+        </div>
+
+        <!-- الهيدر مع شعار وهمي -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-coins"></i>
+                <h1>صرف العملات</h1>
+            </div>
+            <p class="subtitle">أسعار الصرف الحية - تحديث فوري</p>
+        </header>
+
+        <!-- بطاقة تحويل العملات الرئيسية -->
+        <div class="converter-card">
+            <!-- زر التحديث (وهمي) -->
+            <div class="update-indicator">
+                <i class="fas fa-sync-alt"></i>
+                <span id="updateTime">جاري تحميل الأسعار...</span>
+            </div>
+
+            <!-- حقل المبلغ -->
+            <div class="amount-section">
+                <label for="amount">المبلغ</label>
+                <div class="amount-input">
+                    <input type="number" id="amount" value="1" min="0" step="0.01">
+                    <span id="currencyFrom">USD</span>
+                </div>
+            </div>
+
+            <!-- قسم التحويل -->
+            <div class="conversion-section">
+                <!-- من -->
+                <div class="currency-select">
+                    <label>من</label>
+                    <select id="fromCurrency" class="currency-dropdown">
+                        <option value="USD" selected>USD - دولار أمريكي</option>
+                        <option value="EUR">EUR - يورو</option>
+                        <option value="GBP">GBP - جنيه إسترليني</option>
+                        <option value="JPY">JPY - ين ياباني</option>
+                        <option value="CNY">CNY - يوان صيني</option>
+                        <option value="SAR">SAR - ريال سعودي</option>
+                        <option value="AED">AED - درهم إماراتي</option>
+                        <option value="KWD">KWD - دينار كويتي</option>
+                        <option value="EGP">EGP - جنيه مصري</option>
+                        <option value="TRY">TRY - ليرة تركية</option>
+                    </select>
+                </div>
+
+                <!-- زر التبديل -->
+                <button class="swap-button" id="swapCurrencies">
+                    <i class="fas fa-exchange-alt"></i>
+                </button>
+
+                <!-- إلى -->
+                <div class="currency-select">
+                    <label>إلى</label>
+                    <select id="toCurrency" class="currency-dropdown">
+                        <option value="USD">USD - دولار أمريكي</option>
+                        <option value="EUR" selected>EUR - يورو</option>
+                        <option value="GBP">GBP - جنيه إسترليني</option>
+                        <option value="JPY">JPY - ين ياباني</option>
+                        <option value="CNY">CNY - يوان صيني</option>
+                        <option value="SAR">SAR - ريال سعودي</option>
+                        <option value="AED">AED - درهم إماراتي</option>
+                        <option value="KWD">KWD - دينار كويتي</option>
+                        <option value="EGP">EGP - جنيه مصري</option>
+                        <option value="TRY">TRY - ليرة تركية</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- نتيجة التحويل -->
+            <div class="result-section">
+                <div class="result-box">
+                    <span class="result-label">النتيجة</span>
+                    <span class="result-value" id="result">1.00 USD = 0.85 EUR</span>
+                </div>
+                <div class="rate-info" id="rateInfo">
+                    <i class="fas fa-info-circle"></i>
+                    <span>سعر الصرف: 1 USD = 0.85 EUR</span>
+                </div>
+            </div>
+
+            <!-- أسعار سريعة لبعض العملات (وهمية) -->
+            <div class="quick-rates">
+                <h3>أسعار سريعة <i class="fas fa-bolt"></i></h3>
+                <div class="rates-grid" id="quickRates">
+                    <div class="rate-item">USD/EUR <span>0.85</span></div>
+                    <div class="rate-item">USD/GBP <span>0.73</span></div>
+                    <div class="rate-item">EUR/GBP <span>0.86</span></div>
+                    <div class="rate-item">USD/JPY <span>110.5</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- قسم أخبار العملات (وهمي) -->
+        <div class="news-section">
+            <h2><i class="fas fa-newspaper"></i> آخر أخبار العملات</h2>
+            <div class="news-grid">
+                <div class="news-item">
+                    <span class="news-time">منذ 5 دقائق</span>
+                    <p>الدولار يستقر أمام العملات الرئيسية مع ترقب بيانات التضخم</p>
+                </div>
+                <div class="news-item">
+                    <span class="news-time">منذ 15 دقيقة</span>
+                    <p>اليورو يرتفع مقابل الدولار بعد اجتماع المركزي الأوروبي</p>
+                </div>
+                <div class="news-item">
+                    <span class="news-time">منذ 30 دقيقة</span>
+                    <p>الجنيه الإسترليني عند أعلى مستوى في أسبوع</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- رسالة خصوصية وهمية (لطمأنة المستخدم) -->
+        <div class="privacy-note">
+            <i class="fas fa-shield-alt"></i>
+            <span>جميع التحويلات آمنة ومشفرة - تحديث يومي للأسعار</span>
+        </div>
+
+        <!-- الفوتر -->
+        <footer class="footer">
+            <p>جميع الحقوق محفوظة &copy; 2024 - محول العملات العالمي</p>
+        </footer>
+    </div>
+
+    <!-- سكربت الموقع -->
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
