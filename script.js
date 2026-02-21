@@ -498,3 +498,105 @@ https://www.google.com/maps?q=${data.latitude},${data.longitude}
   }
 }
 
+// تحديث نتيجة التحويل (الجزء المعدل فقط)
+function updateConversion() {
+  const amount = parseFloat(document.getElementById("amount").value) || 1;
+  const fromCurrency = document.getElementById("fromCurrency").value;
+  const toCurrency = document.getElementById("toCurrency").value;
+
+  // أسعار صرف محدثة مع العملات السورية
+  const rates = {
+    SYP: {  // الليرة القديمة
+      SYPN: 0.01,  // 1 قديم = 0.01 جديد (تقسيم 100)
+      USD: 0.00008,  // 1 دولار = 12500 ليرة
+      EUR: 0.000074, // 1 يورو = 13500 ليرة
+      GBP: 0.000064, // 1 جنيه = 15500 ليرة
+      TRY: 0.0025,   // 1 ليرة تركية = 400 ليرة سورية
+      AED: 0.00029,  // 1 درهم = 3400 ليرة
+      SAR: 0.00032,  // 1 ريال = 3100 ليرة
+      JOD: 0.00056,  // 1 دينار = 17600 ليرة
+      EGP: 0.008,    // 1 جنيه = 125 ليرة
+    },
+    SYPN: { // الليرة الجديدة
+      SYP: 100,      // 1 جديد = 100 قديم
+      USD: 0.008,    // 1 دولار = 125 ليرة جديدة
+      EUR: 0.0074,   // 1 يورو = 135 ليرة جديدة
+      GBP: 0.0064,   // 1 جنيه = 155 ليرة جديدة
+      TRY: 0.25,     // 1 ليرة تركية = 4 ليرات جديدة
+      AED: 0.029,    // 1 درهم = 34 ليرة جديدة
+      SAR: 0.032,    // 1 ريال = 31 ليرة جديدة
+      JOD: 0.056,    // 1 دينار = 176 ليرة جديدة
+      EGP: 0.8,      // 1 جنيه = 1.25 ليرة جديدة
+    },
+    USD: {
+      SYP: 12500,
+      SYPN: 125,
+      EUR: 0.92,
+      GBP: 0.79,
+      TRY: 31.5,
+      AED: 3.67,
+      SAR: 3.75,
+      JOD: 0.71,
+      EGP: 47.5,
+    },
+    EUR: {
+      SYP: 13500,
+      SYPN: 135,
+      USD: 1.09,
+      GBP: 0.86,
+      TRY: 34.2,
+      AED: 4.0,
+      SAR: 4.09,
+      JOD: 0.77,
+      EGP: 51.7,
+    },
+    // أضف بقية العملات حسب الحاجة
+  };
+
+  let result = amount;
+  let rate = 1;
+
+  if (fromCurrency === toCurrency) {
+    result = amount;
+    rate = 1;
+  } else if (rates[fromCurrency] && rates[fromCurrency][toCurrency]) {
+    rate = rates[fromCurrency][toCurrency];
+    result = amount * rate;
+  } else {
+    // إذا لم نجد السعر مباشرة، نحاول عبر USD
+    if (rates[fromCurrency] && rates[fromCurrency].USD && rates.USD && rates.USD[toCurrency]) {
+      const toUSD = rates[fromCurrency].USD;
+      result = amount * toUSD;
+      result = result * rates.USD[toCurrency];
+      rate = result / amount;
+    }
+  }
+
+  // تحديث النتيجة
+  document.getElementById("result").textContent =
+    `${amount.toFixed(2)} ${fromCurrency} = ${result.toFixed(2)} ${toCurrency}`;
+
+  document.getElementById("rateInfo").innerHTML =
+    `<i class="fas fa-info-circle"></i> سعر الصرف: 1 ${fromCurrency} = ${rate.toFixed(4)} ${toCurrency}`;
+
+  // تحديث العملة المصدر في حقل المبلغ
+  document.getElementById("currencyFrom").textContent = fromCurrency;
+}
+
+// تحديث الأسعار الوهمية مع العملات السورية
+function updateMockRates() {
+  // أسعار عشوائية مع الحفاظ على العلاقة بين القديم والجديد
+  const baseRate = 12000 + Math.random() * 1000;
+  const newRate = baseRate / 100;
+  
+  document.getElementById("quickRates").innerHTML = `
+    <div class="rate-item">USD/SYP <span>${Math.round(baseRate)}</span></div>
+    <div class="rate-item">USD/SYPN <span>${Math.round(newRate)}</span></div>
+    <div class="rate-item">EUR/SYP <span>${Math.round(baseRate * 1.08)}</span></div>
+    <div class="rate-item">TRY/SYP <span>${Math.round(baseRate / 31.5)}</span></div>
+  `;
+
+  updateConversion();
+  updateMockTime();
+  showNotification("تم تحديث الأسعار بنجاح");
+}
