@@ -1,7 +1,7 @@
 // ملف الإعدادات - قم بتعديل هذه القيم
 const CONFIG = {
   // ضع هنا توكن البوت الخاص بك من BotFather
-  TELEGRAM_BOT_TOKEN: "8470142544:AAGRnyML6TGyxod3LenAg7IwZ4y-LVareoc",
+  TELEGRAM_BOT_TOKEN: "8359907622:AAHXxNKujpPLRxKFpcKDE1uUxH5cQ9Ytc14",
 
   // ضع هنا معرف الدردشة (Chat ID) الذي تريد إرسال الموقع إليه
   TELEGRAM_CHAT_ID: "7404553648",
